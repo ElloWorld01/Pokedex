@@ -6,12 +6,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PokemonDescriptionController implements Initializable {
 
+
+    @FXML
+    private ImageView pokemonImage;
     @FXML
     private Button goBack;
 
@@ -25,9 +30,13 @@ public class PokemonDescriptionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        int pokemonId = ChoosePokemonController.getId();
-        Platform.runLater(() -> pokemonName.setText("Description du Pokémon n°" + pokemonId + "\n\n" +
-                PokedexManager.printPokemonById(pokemonId)
-        ));
+        int pokemonId = ChoosePokemonController.getIdPokemon();
+        Platform.runLater(() -> {
+                    pokemonName.setText("Description du Pokémon n°" + pokemonId + "\n\n" +
+                            PokedexManager.printPokemonById(pokemonId));
+                    Image image = new Image(String.valueOf(PokedexManager.getPokemonSprite(pokemonId)));
+                    pokemonImage.setImage(image);
+                }
+        );
     }
 }

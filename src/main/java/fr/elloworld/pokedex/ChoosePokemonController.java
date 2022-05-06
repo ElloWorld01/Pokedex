@@ -16,12 +16,18 @@ public class ChoosePokemonController implements Initializable {
 
     @FXML
     private TextField idField;
+    @FXML
+    private Button previous;
+    @FXML
+    private Button next;
 
     @FXML
     private Button submitButton;
     @FXML
     private Label pokemonList;
-    public static int id;
+    public static int idPokemon;
+    public static final int DEFAULT_START = PokedexManager.getDefaultStart();
+    public static final int DEFAULT_END = PokedexManager.getDefaultEnd();
 
     @FXML
     protected void handleSubmitButtonAction(ActionEvent e) {
@@ -40,7 +46,7 @@ public class ChoosePokemonController implements Initializable {
             alert("L'identifiant doit être compris entre 1 et 151.");
             return;
         }
-        ChoosePokemonController.id = id;
+        idPokemon = id;
         App.getInstance().showPokemonDescription();
     }
 
@@ -53,29 +59,29 @@ public class ChoosePokemonController implements Initializable {
         alert.show();
     }
 
-    public static int getId() {
-        return id;
+    public static int getIdPokemon() {
+        return idPokemon;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Platform.runLater(() -> pokemonList.setText(PokedexManager.listPokemon(1, 16)));
+        Platform.runLater(() -> pokemonList.setText(PokedexManager.listPokemon(DEFAULT_START, DEFAULT_END)));
     }
 
 
     @FXML
     void onClickNext(ActionEvent e) {
         Platform.runLater(() -> pokemonList.setText(PokedexManager.listPokemon(
-                PokedexManager.getStart() + 16,
-                PokedexManager.getEnd() + 16
+                PokedexManager.getStart() + DEFAULT_END,
+                PokedexManager.getEnd() + DEFAULT_END
         )));
     }
 
     @FXML
     void onClickPrevious(ActionEvent e) {
         Platform.runLater(() -> pokemonList.setText(PokedexManager.listPokemon(
-                PokedexManager.getStart() - 16,
-                PokedexManager.getEnd() - 16
+                PokedexManager.getStart() - DEFAULT_END,
+                PokedexManager.getEnd() - DEFAULT_END
         )));
     }
 }

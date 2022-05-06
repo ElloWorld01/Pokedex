@@ -18,7 +18,7 @@ public class App extends Application {
     public void setRoot(String fxmlFile) {
         try {
             root = FXMLLoader.load(getClass().getResource(fxmlFile));
-            primaryStage.setScene(new Scene(root, 800, 500));
+            primaryStage.setScene(new Scene(root, 406, 587));
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
             fxmlLoader.load();
             primaryStage.show();
