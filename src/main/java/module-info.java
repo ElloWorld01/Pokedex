@@ -1,8 +1,9 @@
-module fr.elloworld.pokedex.pokedex {
+module fr.elloworld.pokedex {
     requires javafx.controls;
     requires javafx.fxml;
-            
-                            
-    opens fr.elloworld.pokedex.pokedex to javafx.fxml;
-    exports fr.elloworld.pokedex.pokedex;
+    requires json.simple;
+
+
+    opens fr.elloworld.pokedex to javafx.fxml;
+    exports fr.elloworld.pokedex;
 }
