@@ -59,4 +59,13 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    public void showInfosCapacite() {
+        try {
+            setRoot("infos-capacites.fxml");
+            primaryStage.setTitle("Informations sur les capacités");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

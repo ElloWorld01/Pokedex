@@ -6,4 +6,6 @@ module fr.elloworld.pokedex {
 
     opens fr.elloworld.pokedex to javafx.fxml;
     exports fr.elloworld.pokedex;
+    exports fr.elloworld.pokedex.pokedex;
+    opens fr.elloworld.pokedex.pokedex to javafx.fxml;
 }

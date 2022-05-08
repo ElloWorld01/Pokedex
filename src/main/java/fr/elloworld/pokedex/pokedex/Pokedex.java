@@ -1,4 +1,4 @@
-package fr.elloworld.pokedex;
+package fr.elloworld.pokedex.pokedex;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -11,23 +11,22 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-public class PokedexManager {
+public class Pokedex {
 
     private static final int DEFAULT_START = 1;
     private static final int DEFAULT_END = 27;
     private static int start = 1;
     private static int end = 18;
+
     static HashMap<Integer, String> pokemons = new HashMap<>();
 
     public static String listPokemon(int start, int end) {
         if (!pokemons.isEmpty()) {
             if (start < end && start >= DEFAULT_START && end <= pokemons.size()) {
-                PokedexManager.start = start;
-                PokedexManager.end = end;
+                Pokedex.start = start;
+                Pokedex.end = end;
             } else if (end > pokemons.size())
                 return printListPokemon(151 - DEFAULT_END, 151);
             else if (start < 1)
@@ -48,15 +47,18 @@ public class PokedexManager {
         return sb.toString();
     }
 
-
-    private static JSONObject getPokemonFromId(int id) {
+    static JSONObject getPokemonFromId(int id) {
         return getJSONObjectFromPokeAPI("pokemon/" + id);
     }
 
-    private static JSONObject getJSONObjectFromPokeAPI(String url) {
+    static JSONObject getJSONObjectFromPokeAPI(String url) {
         try {
+            URL hp;
             String pokeapi = "https://pokeapi.co/api/v2/";
-            URL hp = new URL(pokeapi + url);
+            if (url.contains("https://pokeapi.co/api/v2/"))
+                hp = new URL(url);
+            else
+                hp = new URL(pokeapi + url);
             HttpURLConnection hpCon = (HttpURLConnection) hp.openConnection();
             hpCon.connect();
 
@@ -78,7 +80,6 @@ public class PokedexManager {
         }
     }
 
-
     private static void fillPokemonsHashMap() {
         JSONObject listPokemons = getJSONObjectFromPokeAPI("pokemon?limit=151");
         JSONArray pokes = (JSONArray) listPokemons.get("results");
@@ -89,37 +90,28 @@ public class PokedexManager {
     }
 
     private static String printPokemon(JSONObject pokemon) {
-        String abilitiesString = getAbilitiesString(pokemon);
+        HashMap<String, String> abilitiesString = AbilitiesManager.getAbilitiesWithURL(pokemon);
         return ("""
                 Nom du Pokémon : %s
                 Id : %s
                 Poids : %s
                 Taille : %s
-                Capacités : %s
+                Capacité(s) : %s
                 """).formatted(
                 getNameInFrench((String) pokemon.get("name")),
                 pokemon.get("id"),
                 pokemon.get("weight"),
                 pokemon.get("height"),
-                abilitiesString);
+                AbilitiesManager.getAbilitiesString(abilitiesString));
     }
 
-
-    private static String getAbilitiesString(JSONObject pokemon) {
-        List<String> abilities = new ArrayList<>();
-        JSONArray abilitiesArray = (JSONArray) pokemon.get("abilities");
-        for (int i = 0; i < abilitiesArray.size(); i++) {
-            JSONObject ability = (JSONObject) abilitiesArray.get(i);
-            if (i == 0)
-                abilities.add((String) ((JSONObject) ability.get("ability")).get("name"));
-            else
-                abilities.add((String) ((JSONObject) ability.get("ability")).get("name"));
-        }
-
+    public static String printAbilitiesDescription(int id) {
+        HashMap<String, String> abilities = AbilitiesManager.getAbilitiesWithURL(Pokedex.getPokemonFromId(id));
         StringBuilder abilitiesSB = new StringBuilder();
-        for (String ability : abilities)
-            abilitiesSB.append(getAbilityInFrench(ability)).append(", ");
-        abilitiesSB.delete(abilitiesSB.length() - 2, abilitiesSB.length());
+        for (String ability : abilities.keySet()) {
+            abilitiesSB.append(AbilitiesManager.getAbilityInFrench(ability)).append(" :\n")
+                    .append(AbilitiesManager.getAbilityFlavorTextInFrench(abilities.get(ability))).append("\n\n");
+        }
         return abilitiesSB.toString();
     }
 
@@ -140,12 +132,8 @@ public class PokedexManager {
         return getSearchedElement(languages);
     }
 
-    private static String getAbilityInFrench(String name) {
-        JSONObject languages = getJSONObjectFromPokeAPI("ability/" + name);
-        return getSearchedElement(languages);
-    }
 
-    private static String getSearchedElement(JSONObject languages) {
+    static String getSearchedElement(JSONObject languages) {
         for (Object key : languages.keySet()) {
             if (key.equals("names")) {
                 JSONArray names = (JSONArray) languages.get(key);

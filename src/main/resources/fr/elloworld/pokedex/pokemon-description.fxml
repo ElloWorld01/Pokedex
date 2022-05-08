@@ -12,7 +12,8 @@
       <Button fx:id="goBack" defaultButton="true" layoutX="128.0" layoutY="517.0" onAction="#goBackAction" prefHeight="60.0" prefWidth="150.0" text="Retour" />
       <Pane layoutX="18.0" layoutY="56.0" prefHeight="443.0" prefWidth="371.0" style="-fx-background-color: #00B1D0;">
          <children>
-            <Label fx:id="pokemonName" alignment="BASELINE_CENTER" graphicTextGap="1000.0" layoutX="11.0" layoutY="220.0" prefHeight="200.0" prefWidth="349.0" text="Chargement...">
+            <Button fx:id="infosCapacites" defaultButton="true" layoutX="131.0" layoutY="389.0" onAction="#goToInfosCapacitesAction" prefHeight="40.0" prefWidth="111.0" style="-fx-background-color: ff6e6e;" text="Infos capacités" />
+            <Label fx:id="pokemonName" alignment="BASELINE_CENTER" graphicTextGap="1000.0" layoutX="11.0" layoutY="221.0" prefHeight="161.0" prefWidth="349.0" text="Chargement...">
                <font>
                   <Font size="15.0" />
                </font></Label>
@@ -21,7 +22,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <ImageView fx:id="pokemonImage" fitHeight="200.0" fitWidth="200.0" layoutX="85.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="pokemonImage" fitHeight="176.0" fitWidth="176.0" layoutX="98.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
    </children>

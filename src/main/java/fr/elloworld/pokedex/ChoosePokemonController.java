@@ -1,5 +1,6 @@
 package fr.elloworld.pokedex;
 
+import fr.elloworld.pokedex.pokedex.Pokedex;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,8 +27,8 @@ public class ChoosePokemonController implements Initializable {
     @FXML
     private Label pokemonList;
     public static int idPokemon;
-    public static final int DEFAULT_START = PokedexManager.getDefaultStart();
-    public static final int DEFAULT_END = PokedexManager.getDefaultEnd();
+    public static final int DEFAULT_START = Pokedex.getDefaultStart();
+    public static final int DEFAULT_END = Pokedex.getDefaultEnd();
 
     @FXML
     protected void handleSubmitButtonAction(ActionEvent e) {
@@ -65,23 +66,23 @@ public class ChoosePokemonController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Platform.runLater(() -> pokemonList.setText(PokedexManager.listPokemon(DEFAULT_START, DEFAULT_END)));
+        Platform.runLater(() -> pokemonList.setText(Pokedex.listPokemon(DEFAULT_START, DEFAULT_END)));
     }
 
 
     @FXML
     void onClickNext(ActionEvent e) {
-        Platform.runLater(() -> pokemonList.setText(PokedexManager.listPokemon(
-                PokedexManager.getStart() + DEFAULT_END,
-                PokedexManager.getEnd() + DEFAULT_END
+        Platform.runLater(() -> pokemonList.setText(Pokedex.listPokemon(
+                Pokedex.getStart() + DEFAULT_END,
+                Pokedex.getEnd() + DEFAULT_END
         )));
     }
 
     @FXML
     void onClickPrevious(ActionEvent e) {
-        Platform.runLater(() -> pokemonList.setText(PokedexManager.listPokemon(
-                PokedexManager.getStart() - DEFAULT_END,
-                PokedexManager.getEnd() - DEFAULT_END
+        Platform.runLater(() -> pokemonList.setText(Pokedex.listPokemon(
+                Pokedex.getStart() - DEFAULT_END,
+                Pokedex.getEnd() - DEFAULT_END
         )));
     }
 }

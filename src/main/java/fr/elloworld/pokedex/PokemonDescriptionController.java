@@ -1,5 +1,6 @@
 package fr.elloworld.pokedex;
 
+import fr.elloworld.pokedex.pokedex.Pokedex;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +20,8 @@ public class PokemonDescriptionController implements Initializable {
     private ImageView pokemonImage;
     @FXML
     private Button goBack;
-
+    @FXML
+    private Button infosCapacites;
     @FXML
     private Label pokemonName;
 
@@ -28,13 +30,18 @@ public class PokemonDescriptionController implements Initializable {
         App.getInstance().showChoosePokemon();
     }
 
+    @FXML
+    void goToInfosCapacitesAction(ActionEvent e) {
+        App.getInstance().showInfosCapacite();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         int pokemonId = ChoosePokemonController.getIdPokemon();
         Platform.runLater(() -> {
                     pokemonName.setText("Description du Pokémon n°" + pokemonId + "\n\n" +
-                            PokedexManager.printPokemonById(pokemonId));
-                    Image image = new Image(String.valueOf(PokedexManager.getPokemonSprite(pokemonId)));
+                            Pokedex.printPokemonById(pokemonId));
+                    Image image = new Image(String.valueOf(Pokedex.getPokemonSprite(pokemonId)));
                     pokemonImage.setImage(image);
                 }
         );
