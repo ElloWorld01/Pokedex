@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class PokedexUtils {
+public class Utils {
 
     static String getStringFromUrl(URL url) throws IOException {
         HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
@@ -29,10 +29,10 @@ public class PokedexUtils {
 
     static String getNameInFrench(String name) {
         JSONObject languages = Pokedex.getJSONObjectFromPokeAPI("pokemon-species/" + name);
-        return getSearchedElement(languages);
+        return getElementInFrench(languages);
     }
 
-    static String getSearchedElement(JSONObject languages) {
+    static String getElementInFrench(JSONObject languages) {
         for (Object key : languages.keySet()) {
             if (key.equals("names")) {
                 JSONArray names = (JSONArray) languages.get(key);

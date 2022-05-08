@@ -38,8 +38,7 @@ public class PokemonDescriptionController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         int pokemonId = ChoosePokemonController.getIdPokemon();
         Platform.runLater(() -> {
-                    pokemonName.setText("Description du Pokémon n°" + pokemonId + "\n\n" +
-                            PokedexPrinter.printPokemonById(pokemonId));
+                    pokemonName.setText(PokedexPrinter.printPokemonById(pokemonId));
                     Image image = new Image(String.valueOf(Pokedex.getPokemonSprite(pokemonId)));
                     pokemonImage.setImage(image);
                 }

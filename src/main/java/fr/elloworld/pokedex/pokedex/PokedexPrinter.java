@@ -10,11 +10,11 @@ public class PokedexPrinter {
     private static final HashMap<Integer, String> pokemons = Pokedex.getPokemons();
 
     public static String printAbilitiesDescription(int id) {
-        HashMap<String, String> abilities = PokedexAbilitiesManager.getAbilitiesWithURL(Pokedex.getPokemonFromId(id));
+        HashMap<String, String> abilities = AbilitiesManager.getAbilitiesWithURL(Pokedex.getPokemonFromId(id));
         StringBuilder abilitiesSB = new StringBuilder();
         for (String ability : abilities.keySet()) {
-            abilitiesSB.append(PokedexAbilitiesManager.getAbilityInFrench(ability)).append(" :\n")
-                    .append(PokedexAbilitiesManager.getAbilityFlavorTextInFrench(abilities.get(ability))).append("\n\n");
+            abilitiesSB.append(AbilitiesManager.getAbilityInFrench(ability)).append(" :\n")
+                    .append(AbilitiesManager.getAbilityFlavorTextInFrench(abilities.get(ability))).append("\n\n");
         }
         return abilitiesSB.toString();
     }
@@ -52,23 +52,25 @@ public class PokedexPrinter {
     }
 
     private static String printPokemon(int id) {
-        String name = PokedexUtils.getNameInFrench(pokemons.get(id));
-        return id + " : " + name + " | ";
+        String name = Utils.getNameInFrench(pokemons.get(id));
+        return new StringBuilder().append(id).append(" ").append(name).append(" | ").toString();
     }
 
     static String printPokemon(JSONObject pokemon) {
-        HashMap<String, String> abilitiesString = PokedexAbilitiesManager.getAbilitiesWithURL(pokemon);
+        HashMap<String, String> abilitiesString = AbilitiesManager.getAbilitiesWithURL(pokemon);
         return ("""
                 Nom du Pokémon : %s
                 Id : %s
                 Poids : %s
                 Taille : %s
+                Types : %s
                 Capacité(s) : %s
                 """).formatted(
-                PokedexUtils.getNameInFrench((String) pokemon.get("name")),
+                Utils.getNameInFrench((String) pokemon.get("name")),
                 pokemon.get("id"),
                 pokemon.get("weight"),
                 pokemon.get("height"),
-                PokedexAbilitiesManager.getAbilitiesString(abilitiesString));
+                TypesManager.getTypes(pokemon),
+                AbilitiesManager.getAbilities(abilitiesString));
     }
 }

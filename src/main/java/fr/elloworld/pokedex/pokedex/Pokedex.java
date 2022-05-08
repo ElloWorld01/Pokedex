@@ -30,7 +30,7 @@ public class Pokedex {
     static JSONObject getJSONObjectFromPokeAPI(String url) {
         try {
             URL finalUrl = url.contains(pokeapiUrl) ? new URL(url) : new URL(pokeapiUrl + url);
-            String json = PokedexUtils.getStringFromUrl(finalUrl);
+            String json = Utils.getStringFromUrl(finalUrl);
             return (JSONObject) new JSONParser().parse(json);
 
         } catch (IOException | ParseException e) {

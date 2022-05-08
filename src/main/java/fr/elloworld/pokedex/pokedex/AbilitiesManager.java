@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 
 import java.util.HashMap;
 
-public class PokedexAbilitiesManager {
+public class AbilitiesManager {
     static HashMap<String, String> getAbilitiesWithURL(JSONObject pokemon) {
         HashMap<String, String> abilities = new HashMap<>();
         JSONArray abilitiesArray = (JSONArray) pokemon.get("abilities");
@@ -17,7 +17,7 @@ public class PokedexAbilitiesManager {
         return abilities;
     }
 
-    static String getAbilitiesString(HashMap<String, String> abilities) {
+    static String getAbilities(HashMap<String, String> abilities) {
         StringBuilder abilitiesSB = new StringBuilder();
         for (String ability : abilities.keySet())
             abilitiesSB.append(getAbilityInFrench(ability)).append(", ");
@@ -41,6 +41,6 @@ public class PokedexAbilitiesManager {
 
     static String getAbilityInFrench(String name) {
         JSONObject languages = Pokedex.getJSONObjectFromPokeAPI("ability/" + name);
-        return PokedexUtils.getSearchedElement(languages);
+        return Utils.getElementInFrench(languages);
     }
 }
